@@ -1,10 +1,479 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>UIAA Avalanche Transceiver Working Group Spring Meeting</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UIAA AvaWG Spring Meeting | Chamonix 2026</title>
+  <meta name="description" content="UIAA Avalanche Transceiver Working Group Spring Meeting in Chamonix, April 27, 2026.">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-1: #e7efe9;
+      --bg-2: #f5f0e7;
+      --paper: #fffdf9;
+      --ink: #14221b;
+      --muted: #3d4d43;
+      --line: #c8d2ca;
+      --accent: #0f6a56;
+      --accent-soft: #d9efe8;
+      --sun: #eab357;
+      --max: 1100px;
+      --radius: 18px;
+      --shadow: 0 20px 48px rgba(20, 34, 27, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(1200px 700px at 90% -10%, #f3dba0 0%, transparent 48%),
+        radial-gradient(900px 520px at 10% 110%, #bfdcd0 0%, transparent 54%),
+        linear-gradient(140deg, var(--bg-1), var(--bg-2));
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 1.2rem 1rem 3rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .chip {
+      display: inline-block;
+      border: 1px solid var(--line);
+      border-radius: 100px;
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.6);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .hero {
+      margin-top: 0.6rem;
+      background: var(--paper);
+      border: 1px solid rgba(200, 210, 202, 0.7);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.2rem, 3vw, 2.7rem);
+      overflow: hidden;
+      position: relative;
+      isolation: isolate;
+      animation: rise 0.8s ease-out both;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      top: -180px;
+      right: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f8cc7c, #e8a748 64%, transparent 72%);
+      opacity: 0.24;
+      z-index: -1;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      max-width: 14ch;
+    }
+
+    .subtitle {
+      margin-top: 0.8rem;
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
+
+    .hero-meta {
+      margin-top: 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .cta-row {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .btn {
+      text-decoration: none;
+      border-radius: 100px;
+      padding: 0.7rem 1rem;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(15, 106, 86, 0.18);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.95rem;
+    }
+
+    .card {
+      background: rgba(255, 253, 249, 0.82);
+      border: 1px solid rgba(200, 210, 202, 0.8);
+      border-radius: var(--radius);
+      padding: 1rem;
+      backdrop-filter: blur(4px);
+      animation: rise 0.8s ease-out both;
+      animation-delay: calc(var(--delay, 0) * 90ms);
+    }
+
+    .card h2 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .agenda {
+      grid-column: span 12;
+    }
+
+    .agenda-list {
+      list-style: none;
+      margin: 0.8rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .agenda-list li {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      padding: 0.62rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .time {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    .venue, .focus, .register {
+      grid-column: span 4;
+    }
+
+    .travel {
+      grid-column: span 12;
+    }
+
+    .map-card {
+      grid-column: span 12;
+    }
+
+    .travel-list {
+      margin: 0.75rem 0 0;
+      padding-left: 1rem;
+      color: var(--muted);
+    }
+
+    .travel-list li {
+      margin: 0.4rem 0;
+    }
+
+    .venue-map {
+      margin-top: 1rem;
+      height: 320px;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .map-pin {
+      width: var(--pin-size, 20px);
+      height: var(--pin-size, 20px);
+      position: relative;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      background: radial-gradient(circle at 35% 30%, #22a184 0%, var(--accent) 62%, #0a4f41 100%);
+      box-shadow: 0 0 0 2px rgba(20, 34, 27, 0.28), 0 8px 16px rgba(20, 34, 27, 0.32);
+    }
+
+    .map-pin::before {
+      content: "";
+      position: absolute;
+      width: 34%;
+      height: 34%;
+      left: 33%;
+      top: 33%;
+      border-radius: 50%;
+      background: var(--sun);
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+    }
+
+    .map-pin::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 2px solid rgba(15, 106, 86, 0.35);
+      animation: pinPulse 2.1s ease-out infinite;
+    }
+
+    @keyframes pinPulse {
+      0% {
+        transform: scale(0.88);
+        opacity: 0.85;
+      }
+      100% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    footer {
+      margin-top: 1rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0.6rem;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .venue, .focus, .register {
+        grid-column: span 12;
+      }
+
+      .agenda-list li {
+        grid-template-columns: 1fr;
+      }
+
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to the UIAA Avalanche Transceiver Working Group</h1>
-    <p>Spring Meeting 2026</p>
+  <div class="wrap">
+    <header>
+      <div class="brand">UIAA AvaWG Spring Meeting</div>
+      <span class="chip">Chamonix, France · 2026</span>
+    </header>
+
+    <section class="hero">
+      <h1>UIAA Avalanche Transceiver Commission Spring Meeting</h1>
+      <p class="subtitle">
+        Working session focused on the new UIAA standard for avalanche transceivers, test methods, and field demonstrations with manufacturers and rescue stakeholders.
+      </p>
+      <div class="hero-meta">
+        <span class="chip">Monday, April 27, 2026</span>
+        <span class="chip">ENSA, Chamonix</span>
+        <span class="chip">Field Session at Plan de l'Aiguille</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="https://theuiaa.typeform.com/to/IDDMXF36" target="_blank" rel="noopener noreferrer">Register</a>
+        <a class="btn" href="#agenda">View Agenda</a>
+      </div>
+    </section>
+
+    <main class="grid">
+      <section class="card agenda" id="agenda" style="--delay:1">
+        <h2>Agenda · April 27, 2026</h2>
+        <p>Official program proposal from the 2026 UIAA AvaWG travel and logistics document.</p>
+        <ul class="agenda-list">
+          <li>
+            <span class="time">07:00-08:30</span>
+            <div><strong>Breakfast</strong><br>Breakfast in ENSA mess hall.</div>
+          </li>
+          <li>
+            <span class="time">08:30-09:00</span>
+            <div><strong>Opening Session</strong><br>Welcome address (Marc) and meeting objectives.</div>
+          </li>
+          <li>
+            <span class="time">09:00-10:00</span>
+            <div><strong>Standard Review I</strong><br>Terms, definitions, and nomenclature.</div>
+          </li>
+          <li>
+            <span class="time">10:00-10:30</span>
+            <div><strong>Coffee Break</strong><br>Networking break.</div>
+          </li>
+          <li>
+            <span class="time">10:30-11:30</span>
+            <div><strong>Standard Review II</strong><br>Test methods.</div>
+          </li>
+          <li>
+            <span class="time">11:30-12:30</span>
+            <div><strong>Lunch & Transfer</strong><br>Sandwich lunch and move to Plan de l'Aiguille.</div>
+          </li>
+          <li>
+            <span class="time">12:30-14:30</span>
+            <div><strong>Cross Test of Transceivers</strong><br>Field validation session.</div>
+          </li>
+          <li>
+            <span class="time">14:30-16:30</span>
+            <div><strong>Live Demonstrations</strong><br>IVAQ demo and SureVive ARVADOS demo.</div>
+          </li>
+          <li>
+            <span class="time">16:30-17:00</span>
+            <div><strong>Return to ENSA</strong><br>Group transfer back to meeting point.</div>
+          </li>
+          <li>
+            <span class="time">17:00-18:00</span>
+            <div><strong>Final Debriefing</strong><br>Key conclusions and next actions.</div>
+          </li>
+          <li>
+            <span class="time">19:00-22:00</span>
+            <div><strong>Dinner</strong><br>Evening group dinner.</div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card focus" style="--delay:2">
+        <h2>Accommodation</h2>
+        <p>
+          Delegates can arrange their own stay or book ENSA rooms at <strong>EUR 54/night</strong> including breakfast.
+          If booking Lykke or Alpina, use promo code <strong>UIAA2026</strong>.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="mailto:philippe.quintart@theuiaa.org?subject=ENSA%20Accommodation%20Request%20-%20UIAA%20AvaWG%202026">Book ENSA</a>
+          <a class="btn" href="https://www.secure-hotel-booking.com/d-edge/Best-Mont-Blanc/2Q9K/28657/fr-FR/DateSelection" target="_blank" rel="noopener noreferrer">Book Lykke</a>
+          <a class="btn" href="https://www.alpinachamonix.com/" target="_blank" rel="noopener noreferrer">Book Alpina</a>
+        </div>
+      </section>
+
+      <section class="card venue" style="--delay:3">
+        <h2>Venue</h2>
+        <p>
+          ENSA is the main meeting point for the day.<br>
+          Unless otherwise noted, sessions run at ENSA.<br>
+          One technical field session takes place at Plan de l'Aiguille.
+        </p>
+        <div class="cta-row">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=ENSA+Chamonix" target="_blank" rel="noopener noreferrer">Open ENSA in Maps</a>
+        </div>
+      </section>
+
+      <section class="card register" id="register" style="--delay:4">
+        <h2>Registration</h2>
+        <p>
+          Register online for the UIAA Avalanche Transceiver WG meeting.<br>
+          For visa invitation letters, contact <strong>philippe.quintart@theuiaa.org</strong>.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="mailto:philippe.quintart@theuiaa.org?subject=Request%20Access%20to%20UIAA%20Avalanche%20Transceivers%20Draft">Request Draft Access</a>
+        </div>
+      </section>
+
+      <section class="card travel" style="--delay:5">
+        <h2>Travel Guidelines</h2>
+        <ul class="travel-list">
+          <li>Visa: EU and Schengen delegates do not need a visa for France. Check requirements at <a href="https://france-visas.gouv.fr/" target="_blank" rel="noopener noreferrer">france-visas.gouv.fr</a>.</li>
+          <li>Nearest airport: Geneva International Airport (GVA), about 1h15 from Chamonix by car/shuttle.</li>
+          <li>Alternative airports: Lyon-Saint Exupery (~2h) and Chambery (~1h30).</li>
+          <li>From Geneva to Chamonix: direct shuttles (SwissTours, AlpyTransfers, Flixbus, BlablacarBus) or train via Saint-Gervais-les-Bains-Le Fayet (~2h total).</li>
+          <li>Electricity in France: 220V, type C plugs.</li>
+        </ul>
+      </section>
+
+      <section class="card map-card" style="--delay:6">
+        <h2>Map</h2>
+        <!-- <p>Black-and-white map centered on ENSA with terrain contour lines.</p> -->
+        <div id="venue-map" class="venue-map" aria-label="OpenStreetMap showing ENSA"></div>
+        <div class="cta-row">
+          <a class="btn" href="https://www.google.com/maps/search/?api=1&query=ENSA+Chamonix" target="_blank" rel="noopener noreferrer">Open ENSA in Maps</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      UIAA Avalanche Transceiver WG Meeting · Chamonix · April 27, 2026
+    </footer>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    const ensa = [45.9274258, 6.8721563];
+    const map = L.map("venue-map", { scrollWheelZoom: false });
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    }).addTo(map);
+
+    L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", {
+      attribution: 'Map style: &copy; OpenTopoMap (CC-BY-SA), SRTM',
+      opacity: 0.38
+    }).addTo(map);
+
+    const pinSize = window.matchMedia("(max-width: 860px)").matches ? 24 : 20;
+
+    const ensaIcon = L.divIcon({
+      className: "",
+      html: `<div class="map-pin" aria-label="ENSA pin" style="--pin-size:${pinSize}px;"></div>`,
+      iconSize: [pinSize, pinSize],
+      iconAnchor: [pinSize / 2, pinSize / 2],
+      popupAnchor: [0, -12]
+    });
+
+    L.marker(ensa, { icon: ensaIcon, keyboard: true }).addTo(map).bindPopup("ENSA (Main meeting point)");
+    map.setView(ensa, 14);
+  </script>
 </body>
 </html>
