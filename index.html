@@ -409,6 +409,7 @@
 
     .legend-dot.green { background: var(--accent); }
     .legend-dot.gold  { background: var(--sun); }
+    .legend-dot.rose  { background: #bc4a3c; }
 
     .map-pin {
       width: var(--pin-size, 20px);
@@ -447,6 +448,14 @@
 
     .map-pin.field::after {
       border-color: rgba(234, 179, 87, 0.5);
+    }
+
+    .map-pin.dinner {
+      background: radial-gradient(circle at 35% 30%, #e58a7f 0%, #bc4a3c 62%, #7f2b21 100%);
+    }
+
+    .map-pin.dinner::after {
+      border-color: rgba(188, 74, 60, 0.48);
     }
 
     /* ── Footer ──────────────────────────────────────────────────────────── */
@@ -630,7 +639,7 @@
           </li>
           <li data-start="19:00" data-end="22:00">
             <span class="time">19:00–22:00</span>
-            <div><strong>Dinner</strong><br>Evening group dinner.</div>
+            <div><strong>Dinner</strong><br>Evening group dinner at <a href="https://maps.app.goo.gl/yHyKaoz18HEuNDQP9" target="_blank" rel="noopener noreferrer">MBC Chamonix Microbrewery</a>.</div>
           </li>
         </ul>
       </section>
@@ -705,14 +714,16 @@
       <section class="card map-card" style="--delay:7">
         <p class="eyebrow">Navigation</p>
         <h2>Map</h2>
-        <div id="venue-map" class="venue-map" aria-label="Map showing ENSA and Plan de l'Aiguille"></div>
+        <div id="venue-map" class="venue-map" aria-label="Map showing ENSA, Plan de l'Aiguille, and dinner venue"></div>
         <div class="map-legend">
           <span class="map-legend-item"><span class="legend-dot green"></span>ENSA — Morning sessions</span>
           <span class="map-legend-item"><span class="legend-dot gold"></span>Plan de l'Aiguille — Field session (12:30–17:00)</span>
+          <span class="map-legend-item"><span class="legend-dot rose"></span>Dinner — MBC Chamonix Microbrewery (19:00)</span>
         </div>
         <div class="cta-row">
           <a class="btn" href="https://www.google.com/maps/search/?api=1&query=ENSA+Chamonix" target="_blank" rel="noopener noreferrer">ENSA in Maps</a>
           <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Plan+de+l%27Aiguille+Chamonix" target="_blank" rel="noopener noreferrer">Plan de l'Aiguille in Maps</a>
+          <a class="btn" href="https://maps.app.goo.gl/yHyKaoz18HEuNDQP9" target="_blank" rel="noopener noreferrer">Dinner in Maps</a>
         </div>
       </section>
 
@@ -730,6 +741,7 @@
     // ── Map ──────────────────────────────────────────────────────────────────
     const ensa         = [45.9274258, 6.8721563];
     const planAiguille = [45.9017, 6.8830];
+    const dinnerVenue  = [45.9273468, 6.8757641];
 
     const map = L.map("venue-map", { scrollWheelZoom: false });
 
@@ -760,6 +772,14 @@
       popupAnchor: [0, -12]
     });
 
+    const dinnerIcon = L.divIcon({
+      className: "",
+      html: `<div class="map-pin dinner" aria-label="Dinner venue" style="--pin-size:${pinSize}px;"></div>`,
+      iconSize: [pinSize, pinSize],
+      iconAnchor: [pinSize / 2, pinSize / 2],
+      popupAnchor: [0, -12]
+    });
+
     L.marker(ensa, { icon: ensaIcon, keyboard: true })
       .addTo(map)
       .bindPopup("<strong>ENSA</strong><br>Main meeting point");
@@ -768,14 +788,11 @@
       .addTo(map)
       .bindPopup("<strong>Plan de l'Aiguille</strong> (2 308 m)<br>Field session · 12:30–17:00");
 
-    L.polyline([ensa, planAiguille], {
-      color: "#0f6a56",
-      weight: 2,
-      dashArray: "6 6",
-      opacity: 0.55
-    }).addTo(map);
+    L.marker(dinnerVenue, { icon: dinnerIcon, keyboard: true })
+      .addTo(map)
+      .bindPopup("<strong>MBC Chamonix Microbrewery</strong><br>Dinner · 19:00–22:00");
 
-    map.fitBounds([ensa, planAiguille], { padding: [48, 48] });
+    map.fitBounds([ensa, planAiguille, dinnerVenue], { padding: [48, 48] });
 
     // ── Countdown ────────────────────────────────────────────────────────────
     function updateCountdown() {
