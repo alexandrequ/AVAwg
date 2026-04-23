@@ -340,6 +340,28 @@
       border-left: 1px solid rgba(15, 106, 86, 0.22);
     }
 
+    .agenda-list [data-test-target] { cursor: pointer; }
+
+    .test-event,
+    .parallel-main,
+    .parallel-session {
+      border-radius: 8px;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .test-event:hover,
+    .parallel-main:hover,
+    .parallel-session:hover {
+      background: #f2f8f5;
+    }
+
+    .test-event.is-selected,
+    .parallel-main.is-selected,
+    .parallel-session.is-selected {
+      background: #e7f3ee;
+      box-shadow: inset 0 0 0 1px rgba(15, 106, 86, 0.3);
+    }
+
     /* ── Gear list ───────────────────────────────────────────────────────── */
     .bring-list {
       list-style: none;
@@ -374,6 +396,90 @@
     }
 
     .travel-list li { margin: 0.4rem 0; }
+
+    /* ── Agenda test panel ──────────────────────────────────────────────── */
+    .agenda-tests-panel {
+      margin-top: 0.75rem;
+      border: 1px solid rgba(15, 106, 86, 0.22);
+      border-radius: 12px;
+      background: #f9fcfa;
+      padding: 0.8rem;
+    }
+
+    .agenda-tests-headline {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .agenda-tests-note {
+      margin-top: 0.25rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .tests-table-wrap {
+      margin-top: 0.85rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow-x: auto;
+      background: #fff;
+    }
+
+    .tests-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+
+    .tests-table th,
+    .tests-table td {
+      padding: 0.58rem 0.62rem;
+      border-bottom: 1px solid rgba(200, 210, 202, 0.75);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .tests-table th {
+      background: #f3f8f5;
+      color: var(--ink);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tests-table tr:last-child td { border-bottom: none; }
+
+    .status-badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 0.12rem 0.45rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .status-done {
+      background: #d9efe8;
+      color: #0f6a56;
+      border-color: rgba(15, 106, 86, 0.25);
+    }
+
+    .status-pending {
+      background: #f4f0e4;
+      color: #7f652f;
+      border-color: rgba(127, 101, 47, 0.24);
+    }
+
+    .status-review {
+      background: #f9e5e2;
+      color: #9c3f34;
+      border-color: rgba(156, 63, 52, 0.26);
+    }
 
     /* ── Map ─────────────────────────────────────────────────────────────── */
     .venue-map {
@@ -496,6 +602,7 @@
         padding-left: 0;
         border-left: none;
       }
+      .tests-table { min-width: 620px; }
       .bring-list { grid-template-columns: 1fr; }
     }
 
@@ -616,7 +723,7 @@
             <span class="time">10:00–10:30</span>
             <div><strong>Coffee Break</strong><br>Networking break.</div>
           </li>
-          <li data-start="10:30" data-end="11:30">
+          <li class="test-event" data-start="10:30" data-end="11:30" data-test-target="indoor-tests" tabindex="0" role="button" aria-label="Indoor Tests Session, show related tests">
             <span class="time">10:30–11:30</span>
             <div><strong>Indoor Tests Session</strong><br>Test methods.</div>
           </li>
@@ -626,8 +733,8 @@
           </li>
           <li class="parallel" data-start="12:30" data-end="16:30">
             <span class="time">12:30–16:30</span>
-            <div><strong>Field Tests of Transceivers</strong><br>Field validation session.</div>
-            <div class="parallel-session"><strong>Live Demonstrations</strong><br>IVAQ demo.</div>
+            <div class="parallel-main" data-test-target="field-tests" tabindex="0" role="button" aria-label="Field Tests of Transceivers, show related tests"><strong>Field Tests of Transceivers</strong><br>Field validation session.</div>
+            <div class="parallel-session" data-test-target="live-demos" tabindex="0" role="button" aria-label="Live Demonstrations, show related tests"><strong>Live Demonstrations</strong><br>IVAQ demo.</div>
           </li>
           <li data-start="16:30" data-end="17:00">
             <span class="time">16:30–17:00</span>
@@ -642,6 +749,24 @@
             <div><strong>Dinner</strong><br>Evening group dinner at <a href="https://maps.app.goo.gl/yHyKaoz18HEuNDQP9" target="_blank" rel="noopener noreferrer">MBC Chamonix Microbrewery</a>.</div>
           </li>
         </ul>
+        <div class="agenda-tests-panel" id="agenda-tests-panel" hidden>
+          <h3 class="agenda-tests-headline" id="agenda-tests-title"></h3>
+          <p class="agenda-tests-note">Tests related to the selected agenda event.</p>
+          <div class="tests-table-wrap" role="region" aria-label="Event related tests">
+            <table class="tests-table">
+              <thead>
+                <tr>
+                  <th>Status</th>
+                  <th>Test</th>
+                  <th>Equipment</th>
+                  <th>Location</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody id="agenda-tests-body"></tbody>
+            </table>
+          </div>
+        </div>
       </section>
 
       <section class="card accommodation" style="--delay:2">
@@ -813,6 +938,171 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 60000);
+
+    // ── Agenda-linked test details ───────────────────────────────────────────
+    const eventTests = {
+      "indoor-tests": {
+        title: "Indoor Tests Session",
+        rows: [
+          {
+            status: "done",
+            test: "Cold Drop Bounce Test",
+            equipment: "Drop rig; metal plate (Al 6065); climate chamber; transceiver",
+            location: "ENSA",
+            description: "Drop the device from 1 m on all faces after cold conditioning to check damage and mode stability."
+          },
+          {
+            status: "review",
+            test: "Immersion Test",
+            equipment: "Water bath (10 C); heating plate (45 C); transceiver; reference transceiver",
+            location: "ENSA",
+            description: "Submerge device in water then heat it and test SEARCH and SEND functionality."
+          },
+          {
+            status: "done",
+            test: "Revert to Send (Passive Motion)",
+            equipment: "Transceiver; timer",
+            location: "Laboratory (Indoor)",
+            description: "Leave device stationary in SEARCH mode to verify automatic revert with warning."
+          }
+        ]
+      },
+      "field-tests": {
+        title: "Field Tests of Transceivers",
+        rows: [
+          {
+            status: "pending",
+            test: "Group Check",
+            equipment: "Multiple transceivers",
+            location: "Outdoor",
+            description: "Place device in group check mode to verify signal detection and battery display."
+          },
+          {
+            status: "done",
+            test: "Maximum Reliability Signal Range",
+            equipment: "Golden transceiver; measuring tape",
+            location: "Outdoor",
+            description: "Increase distance between transmitter and receiver until stable signal is lost."
+          },
+          {
+            status: "done",
+            test: "Search Strip Width Test",
+            equipment: "Golden transceiver; alignment markers; sticks",
+            location: "Outdoor",
+            description: "Move receiver at defined angles and distances to evaluate detection coverage."
+          },
+          {
+            status: "done",
+            test: "Static Distance Consistency Test",
+            equipment: "Golden transceiver; measuring tape; sticks",
+            location: "Outdoor",
+            description: "Move receiver stepwise toward transmitter and verify distance decreases consistently."
+          },
+          {
+            status: "done",
+            test: "Distance Indication Scale Test",
+            equipment: "Golden transceiver; markers; stopwatch",
+            location: "Outdoor",
+            description: "Perform repeated approaches to verify monotonic distance decrease and accuracy."
+          },
+          {
+            status: "done",
+            test: "Fine Search Accuracy (1 m)",
+            equipment: "Golden transceiver; probe grid",
+            location: "Outdoor",
+            description: "Move receiver in small increments around transmitter at 1 m depth to measure precision."
+          },
+          {
+            status: "done",
+            test: "Fine Search Accuracy (2 m)",
+            equipment: "Golden transceiver; probe grid",
+            location: "Outdoor",
+            description: "Move receiver in small increments around a transmitter at 2 m depth to measure precision."
+          },
+          {
+            status: "done",
+            test: "Revert to Send (Active Motion)",
+            equipment: "Transceiver",
+            location: "Outdoor",
+            description: "Move device continuously in SEARCH mode to confirm no revert occurs."
+          },
+          {
+            status: "pending",
+            test: "Marking Function Test",
+            equipment: "Multiple transceivers",
+            location: "Outdoor",
+            description: "Use multiple transmitters and mark signals to verify correct isolation and display."
+          }
+        ]
+      },
+      "live-demos": {
+        title: "Live Demonstrations",
+        rows: [
+          {
+            status: "pending",
+            test: "Group Check",
+            equipment: "Multiple transceivers",
+            location: "Outdoor",
+            description: "Demonstration of group check flow and signal/battery feedback across devices."
+          },
+          {
+            status: "pending",
+            test: "Marking Function Test",
+            equipment: "Multiple transceivers",
+            location: "Outdoor",
+            description: "Demonstration with multiple transmitters to validate isolation and display behavior."
+          }
+        ]
+      }
+    };
+
+    function statusBadge(status) {
+      const byStatus = {
+        done: ["Done", "status-done"],
+        pending: ["Pending", "status-pending"],
+        review: ["Review", "status-review"]
+      };
+      const [label, klass] = byStatus[status] || ["Pending", "status-pending"];
+      return `<span class="status-badge ${klass}">${label}</span>`;
+    }
+
+    function renderEventTests(targetKey) {
+      const panel = document.getElementById("agenda-tests-panel");
+      const title = document.getElementById("agenda-tests-title");
+      const body = document.getElementById("agenda-tests-body");
+      const data = eventTests[targetKey];
+      if (!panel || !title || !body || !data) return;
+
+      title.textContent = data.title;
+      body.innerHTML = data.rows
+        .map(row => `<tr>
+          <td>${statusBadge(row.status)}</td>
+          <td>${row.test}</td>
+          <td>${row.equipment}</td>
+          <td>${row.location}</td>
+          <td>${row.description}</td>
+        </tr>`)
+        .join("");
+
+      panel.hidden = false;
+      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    const testTriggers = document.querySelectorAll("[data-test-target]");
+    testTriggers.forEach(el => {
+      const activate = () => {
+        testTriggers.forEach(item => item.classList.remove("is-selected"));
+        el.classList.add("is-selected");
+        renderEventTests(el.dataset.testTarget);
+      };
+      el.addEventListener("click", activate);
+      el.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      });
+    });
 
     // ── Live agenda highlight (active only on meeting day) ───────────────────
     function highlightAgenda() {
