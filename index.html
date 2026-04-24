@@ -397,26 +397,62 @@
 
     .travel-list li { margin: 0.4rem 0; }
 
-    /* ── Agenda test panel ──────────────────────────────────────────────── */
-    .agenda-tests-panel {
-      margin-top: 0.75rem;
-      border: 1px solid rgba(15, 106, 86, 0.22);
-      border-radius: 12px;
-      background: #f9fcfa;
-      padding: 0.8rem;
+    /* ── Tests modal ─────────────────────────────────────────────────────── */
+    .tests-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 18, 14, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 1200;
+    }
+
+    .tests-modal-backdrop.is-open { display: flex; }
+
+    .tests-modal {
+      width: min(1020px, 100%);
+      max-height: min(82vh, 760px);
+      overflow: auto;
+      background: #fffdf9;
+      border: 1px solid rgba(200, 210, 202, 0.9);
+      border-radius: 14px;
+      box-shadow: 0 22px 50px rgba(20, 34, 27, 0.22);
+      padding: 0.85rem;
+    }
+
+    .tests-modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.7rem;
     }
 
     .agenda-tests-headline {
       margin: 0;
-      font-size: 1.02rem;
+      font-size: 1.06rem;
       font-weight: 700;
       color: var(--ink);
     }
 
     .agenda-tests-note {
-      margin-top: 0.25rem;
+      margin: 0.2rem 0 0;
       color: var(--muted);
       font-size: 0.84rem;
+    }
+
+    .tests-modal-close {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 999px;
+      width: 34px;
+      height: 34px;
+      font-size: 1.05rem;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
     }
 
     .tests-table-wrap {
@@ -451,35 +487,6 @@
     }
 
     .tests-table tr:last-child td { border-bottom: none; }
-
-    .status-badge {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 0.12rem 0.45rem;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      border: 1px solid transparent;
-      white-space: nowrap;
-    }
-
-    .status-done {
-      background: #d9efe8;
-      color: #0f6a56;
-      border-color: rgba(15, 106, 86, 0.25);
-    }
-
-    .status-pending {
-      background: #f4f0e4;
-      color: #7f652f;
-      border-color: rgba(127, 101, 47, 0.24);
-    }
-
-    .status-review {
-      background: #f9e5e2;
-      color: #9c3f34;
-      border-color: rgba(156, 63, 52, 0.26);
-    }
 
     /* ── Map ─────────────────────────────────────────────────────────────── */
     .venue-map {
@@ -734,7 +741,7 @@
           <li class="parallel" data-start="12:30" data-end="16:30">
             <span class="time">12:30–16:30</span>
             <div class="parallel-main" data-test-target="field-tests" tabindex="0" role="button" aria-label="Field Tests of Transceivers, show related tests"><strong>Field Tests of Transceivers</strong><br>Field validation session.</div>
-            <div class="parallel-session" data-test-target="live-demos" tabindex="0" role="button" aria-label="Live Demonstrations, show related tests"><strong>Live Demonstrations</strong><br>IVAQ demo.</div>
+            <div class="parallel-session" data-test-target="live-demos" data-external-url="https://www.ivaq.es/" tabindex="0" role="button" aria-label="Live Demonstrations, open IVAQ website"><strong>Live Demonstrations</strong><br>IVAQ demo.</div>
           </li>
           <li data-start="16:30" data-end="17:00">
             <span class="time">16:30–17:00</span>
@@ -749,23 +756,6 @@
             <div><strong>Dinner</strong><br>Evening group dinner at <a href="https://maps.app.goo.gl/yHyKaoz18HEuNDQP9" target="_blank" rel="noopener noreferrer">MBC Chamonix Microbrewery</a>.</div>
           </li>
         </ul>
-        <div class="agenda-tests-panel" id="agenda-tests-panel" hidden>
-          <h3 class="agenda-tests-headline" id="agenda-tests-title"></h3>
-          <p class="agenda-tests-note">Tests related to the selected agenda event.</p>
-          <div class="tests-table-wrap" role="region" aria-label="Event related tests">
-            <table class="tests-table">
-              <thead>
-                <tr>
-                  <th>Test</th>
-                  <th>Equipment</th>
-                  <th>Location</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody id="agenda-tests-body"></tbody>
-            </table>
-          </div>
-        </div>
       </section>
 
       <section class="card accommodation" style="--delay:2">
@@ -858,6 +848,31 @@
       <p class="footer-sub">International Climbing and Mountaineering Federation (UIAA)</p>
     </footer>
 
+  </div>
+
+  <div class="tests-modal-backdrop" id="tests-modal-backdrop" aria-hidden="true">
+    <div class="tests-modal" role="dialog" aria-modal="true" aria-labelledby="agenda-tests-title">
+      <div class="tests-modal-head">
+        <div>
+          <h3 class="agenda-tests-headline" id="agenda-tests-title"></h3>
+          <p class="agenda-tests-note">Tests related to the selected agenda event.</p>
+        </div>
+        <button type="button" class="tests-modal-close" id="tests-modal-close" aria-label="Close tests popup">✕</button>
+      </div>
+      <div class="tests-table-wrap" role="region" aria-label="Event related tests">
+        <table class="tests-table">
+          <thead>
+            <tr>
+              <th>Test</th>
+              <th>Equipment</th>
+              <th>Location</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody id="agenda-tests-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -1056,11 +1071,11 @@
     };
 
     function renderEventTests(targetKey) {
-      const panel = document.getElementById("agenda-tests-panel");
+      const modalBackdrop = document.getElementById("tests-modal-backdrop");
       const title = document.getElementById("agenda-tests-title");
       const body = document.getElementById("agenda-tests-body");
       const data = eventTests[targetKey];
-      if (!panel || !title || !body || !data) return;
+      if (!modalBackdrop || !title || !body || !data) return;
 
       title.textContent = data.title;
       body.innerHTML = data.rows
@@ -1072,13 +1087,18 @@
         </tr>`)
         .join("");
 
-      panel.hidden = false;
-      panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      modalBackdrop.classList.add("is-open");
+      modalBackdrop.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
 
     const testTriggers = document.querySelectorAll("[data-test-target]");
     testTriggers.forEach(el => {
       const activate = () => {
+        if (el.dataset.externalUrl) {
+          window.open(el.dataset.externalUrl, "_blank", "noopener,noreferrer");
+          return;
+        }
         testTriggers.forEach(item => item.classList.remove("is-selected"));
         el.classList.add("is-selected");
         renderEventTests(el.dataset.testTarget);
@@ -1090,6 +1110,30 @@
           activate();
         }
       });
+    });
+
+    const testsModalBackdrop = document.getElementById("tests-modal-backdrop");
+    const testsModalClose = document.getElementById("tests-modal-close");
+
+    function closeTestsModal() {
+      if (!testsModalBackdrop) return;
+      testsModalBackdrop.classList.remove("is-open");
+      testsModalBackdrop.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    if (testsModalClose) {
+      testsModalClose.addEventListener("click", closeTestsModal);
+    }
+
+    if (testsModalBackdrop) {
+      testsModalBackdrop.addEventListener("click", event => {
+        if (event.target === testsModalBackdrop) closeTestsModal();
+      });
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") closeTestsModal();
     });
 
     // ── Live agenda highlight (active only on meeting day) ───────────────────
