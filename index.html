@@ -756,7 +756,6 @@
             <table class="tests-table">
               <thead>
                 <tr>
-                  <th>Status</th>
                   <th>Test</th>
                   <th>Equipment</th>
                   <th>Location</th>
@@ -1056,16 +1055,6 @@
       }
     };
 
-    function statusBadge(status) {
-      const byStatus = {
-        done: ["Done", "status-done"],
-        pending: ["Pending", "status-pending"],
-        review: ["Review", "status-review"]
-      };
-      const [label, klass] = byStatus[status] || ["Pending", "status-pending"];
-      return `<span class="status-badge ${klass}">${label}</span>`;
-    }
-
     function renderEventTests(targetKey) {
       const panel = document.getElementById("agenda-tests-panel");
       const title = document.getElementById("agenda-tests-title");
@@ -1076,7 +1065,6 @@
       title.textContent = data.title;
       body.innerHTML = data.rows
         .map(row => `<tr>
-          <td>${statusBadge(row.status)}</td>
           <td>${row.test}</td>
           <td>${row.equipment}</td>
           <td>${row.location}</td>
