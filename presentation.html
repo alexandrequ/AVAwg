@@ -1194,9 +1194,12 @@
   // ── Navigation ────────────────────────────────────────────────────────
   function goTo(n, dir) {
     if (n < 0 || n >= TOTAL) return;
-    slides[current].classList.remove("is-active");
-    slides[current].classList.add(dir === 1 ? "is-prev" : "");
-    setTimeout(() => slides[current].classList.remove("is-prev"), 460);
+    const leaving = current;
+    slides[leaving].classList.remove("is-active");
+    if (dir === 1) {
+      slides[leaving].classList.add("is-prev");
+      setTimeout(() => slides[leaving].classList.remove("is-prev"), 460);
+    }
 
     current = n;
     slides[current].classList.add("is-active");
