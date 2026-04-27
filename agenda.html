@@ -1,0 +1,1031 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UIAA AvaWG · Spring Meeting 2026 · Chamonix</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #0c1d38;
+      --navy-deep: #060d24;
+      --navy-mid:  #152e5c;
+      --blue:      #1e5ca8;
+      --red:       #e92c2c;
+      --gold:      #d4891a;
+      --gold-soft: rgba(212,137,26,0.15);
+      --w:         #ffffff;
+      --w80:       rgba(255,255,255,0.80);
+      --w60:       rgba(255,255,255,0.60);
+      --w40:       rgba(255,255,255,0.40);
+      --w20:       rgba(255,255,255,0.20);
+      --w10:       rgba(255,255,255,0.10);
+      --w06:       rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--navy-deep);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      color: var(--w);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ────────────────────────────────────────────────────────── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    /* ── Hero ──────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      overflow: hidden;
+    }
+
+    .hero-mountains {
+      position: absolute;
+      bottom: 0; left: -1.5rem; right: -1.5rem;
+      height: 160px;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .hero-topo {
+      position: absolute;
+      top: -80px; right: -120px;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      border: 1px solid var(--w06);
+      pointer-events: none;
+    }
+
+    .hero-topo-2 {
+      position: absolute;
+      top: -40px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 1px solid var(--w06);
+      pointer-events: none;
+    }
+
+    .hero-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .hero-org-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--w60);
+    }
+
+    .hero-org-sub {
+      font-size: 0.72rem;
+      color: var(--w40);
+      margin-top: 0.1rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+
+    .hero-rule {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--w60);
+      margin-bottom: 1.8rem;
+      max-width: 52ch;
+      line-height: 1.65;
+    }
+
+    .chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--w10);
+      border: 1px solid var(--w20);
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      color: var(--w80);
+    }
+
+    .chip.red {
+      background: rgba(233,44,44,0.16);
+      border-color: rgba(233,44,44,0.32);
+      color: #f07070;
+    }
+
+    /* ── Section divider ───────────────────────────────────────────────── */
+    .section {
+      margin-top: 3.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--w40);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-eyebrow.gold { color: var(--gold); }
+    .section-eyebrow.red  { color: var(--red); }
+
+    .section-title {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 600;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-rule {
+      width: 32px;
+      height: 2px;
+      background: var(--w20);
+      border-radius: 2px;
+      margin-bottom: 1.4rem;
+    }
+
+    /* ── Full-day timeline ─────────────────────────────────────────────── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border-left: 2px solid var(--w10);
+      padding-left: 0;
+      margin-left: 60px;
+    }
+
+    .tl-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      padding: 0.7rem 0.9rem 0.7rem 1.4rem;
+      border-radius: 0 8px 8px 0;
+      background: var(--w06);
+      transition: background 0.2s;
+    }
+
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--w20);
+      border: 2px solid var(--navy-deep);
+    }
+
+    .tl-item .tl-time-abs {
+      position: absolute;
+      left: calc(-60px - 1.4rem);
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--w40);
+      letter-spacing: 0.04em;
+      width: 52px;
+      text-align: right;
+    }
+
+    .tl-item.field {
+      background: var(--gold-soft);
+      border-left: 3px solid var(--gold);
+    }
+
+    .tl-item.field::before { background: var(--gold); }
+
+    .tl-item.dinner {
+      background: rgba(233,44,44,0.08);
+      border-left: 3px solid rgba(233,44,44,0.35);
+    }
+
+    .tl-item.dinner::before { background: var(--red); }
+
+    .tl-item.is-now {
+      background: rgba(30, 92, 168, 0.2);
+      border-left: 3px solid var(--blue);
+    }
+
+    .tl-item.is-now::before { background: var(--red); box-shadow: 0 0 0 4px rgba(233,44,44,0.25); }
+
+    .tl-item.is-past { opacity: 0.4; }
+
+    .tl-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--w80);
+    }
+
+    .tl-item.field  .tl-title  { color: #f0b060; }
+    .tl-item.dinner .tl-title  { color: #f07070; }
+
+    .tl-desc {
+      font-size: 0.77rem;
+      color: var(--w40);
+      margin-top: 0.1rem;
+    }
+
+    .tl-time-range {
+      font-size: 0.73rem;
+      color: var(--w40);
+      margin-top: 0.25rem;
+    }
+
+    /* ── Session cards ─────────────────────────────────────────────────── */
+    .session-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+    }
+
+    @media (max-width: 600px) {
+      .session-grid { grid-template-columns: 1fr; }
+    }
+
+    .session-card {
+      padding: 0.85rem 1rem;
+      background: var(--w06);
+      border: 1px solid var(--w10);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .session-card.field {
+      background: var(--gold-soft);
+      border-color: rgba(212,137,26,0.22);
+    }
+
+    .session-card.is-now {
+      background: rgba(30, 92, 168, 0.18);
+      border-color: rgba(30, 92, 168, 0.38);
+    }
+
+    .session-card.is-past { opacity: 0.4; }
+
+    .sc-time {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--w40);
+      letter-spacing: 0.03em;
+    }
+
+    .session-card.field .sc-time { color: rgba(212,137,26,0.8); }
+
+    .sc-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--w80);
+    }
+
+    .session-card.field .sc-title { color: #f0b060; }
+
+    .sc-desc {
+      font-size: 0.77rem;
+      color: var(--w40);
+    }
+
+    /* ── Info blocks ───────────────────────────────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1.2rem;
+    }
+
+    @media (max-width: 520px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+
+    .info-block {
+      padding: 1rem 1.1rem;
+      background: var(--w06);
+      border: 1px solid var(--w10);
+      border-radius: 10px;
+    }
+
+    .info-block .ib-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--w40);
+      margin-bottom: 0.4rem;
+    }
+
+    .info-block .ib-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--w80);
+    }
+
+    .info-block .ib-sub {
+      font-size: 0.77rem;
+      color: var(--w40);
+      margin-top: 0.15rem;
+    }
+
+    /* ── Altitude badge ────────────────────────────────────────────────── */
+    .altitude-badge {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      background: var(--gold-soft);
+      border: 1px solid rgba(212,137,26,0.28);
+      border-radius: 10px;
+      padding: 0.75rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .alt-num {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f0b060;
+      line-height: 1;
+    }
+
+    .alt-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(240,176,96,0.7);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Gear list ─────────────────────────────────────────────────────── */
+    .gear-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .gear-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--w60);
+    }
+
+    .gear-item::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ── Dinner highlight ──────────────────────────────────────────────── */
+    .dinner-card {
+      padding: 1rem 1.2rem;
+      background: rgba(233,44,44,0.1);
+      border: 1px solid rgba(233,44,44,0.22);
+      border-radius: 10px;
+      margin-top: 0.8rem;
+    }
+
+    .dinner-card .dc-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(233,44,44,0.8);
+      margin-bottom: 0.3rem;
+    }
+
+    .dinner-card .dc-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--w80);
+    }
+
+    .dinner-card .dc-sub {
+      font-size: 0.8rem;
+      color: var(--w40);
+      margin-top: 0.2rem;
+    }
+
+    /* ── Closing CTA ───────────────────────────────────────────────────── */
+    .closing {
+      margin-top: 4rem;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border: 1px solid var(--w10);
+      border-radius: 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .closing-topo {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid var(--w06);
+      pointer-events: none;
+    }
+
+    .closing-topo-2 {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      border: 1px solid var(--w06);
+      pointer-events: none;
+    }
+
+    .closing h2 {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+
+    .closing-rule {
+      width: 36px; height: 3px;
+      background: var(--red);
+      border-radius: 2px;
+      margin: 0 auto 1rem;
+      position: relative;
+    }
+
+    .closing p {
+      font-size: 1rem;
+      color: var(--w60);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+
+    .closing .tagline {
+      font-size: 0.75rem;
+      color: var(--w40);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    /* ── Top nav bar ───────────────────────────────────────────────────── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(6,13,36,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--w10);
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .topbar-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--w60);
+    }
+
+    .topbar-date {
+      font-size: 0.75rem;
+      color: var(--w40);
+    }
+
+    #topbar-now {
+      font-size: 0.75rem;
+      color: var(--w60);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    #topbar-now .now-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── Important notice ──────────────────────────────────────────────── */
+    .notice {
+      padding: 0.85rem 1.1rem;
+      background: var(--w06);
+      border: 1px solid var(--w10);
+      border-left: 3px solid rgba(233,44,44,0.6);
+      border-radius: 0 8px 8px 0;
+      margin-top: 1rem;
+    }
+
+    .notice .notice-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(233,44,44,0.8);
+      margin-bottom: 0.3rem;
+    }
+
+    .notice p {
+      font-size: 0.85rem;
+      color: var(--w60);
+      line-height: 1.55;
+    }
+
+    /* ── Footer ────────────────────────────────────────────────────────── */
+    .footer {
+      margin-top: 3rem;
+      padding: 1.5rem 1.5rem;
+      border-top: 1px solid var(--w10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .footer-org {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--w40);
+    }
+
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--w20);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ──────────────────────────────────────────────────────────── -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <svg width="22" height="22" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.45)" stroke-width="5.5"/>
+      <polyline points="7,89 27,51 40,64 57,37 93,89"
+        stroke="rgba(255,255,255,0.45)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(44,53) rotate(-25)">
+        <circle cx="0" cy="0" r="3.5" fill="#e92c2c"/>
+        <path d="M -15.04,-5.47 A 16,16 0 0,1 15.04,-5.47" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M -22.55,-8.21 A 24,24 0 0,1 22.55,-8.21" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div>
+      <div class="topbar-title">UIAA AvaWG</div>
+      <div class="topbar-date">Monday 27 April 2026 · Chamonix</div>
+    </div>
+  </div>
+  <div id="topbar-now">
+    <span class="now-dot"></span>
+    <span id="now-label">—</span>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ── HERO ───────────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="hero-topo"></div>
+    <div class="hero-topo-2"></div>
+
+    <div class="hero-logo-row">
+      <svg width="52" height="52" viewBox="0 0 100 100" fill="none" aria-label="UIAA AvaWG logo">
+        <circle cx="50" cy="50" r="43" stroke="#e0e8ff" stroke-width="5.5"/>
+        <polyline points="7,89 27,51 40,64 57,37 93,89"
+          stroke="#e0e8ff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g transform="translate(44,53) rotate(-25)">
+          <circle cx="0" cy="0" r="3.5" fill="#e92c2c"/>
+          <path d="M -7.52,-2.74 A 8,8 0 0,1 7.52,-2.74" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M -15.04,-5.47 A 16,16 0 0,1 15.04,-5.47" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M -22.55,-8.21 A 24,24 0 0,1 22.55,-8.21" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+          <path d="M -30.07,-10.95 A 32,32 0 0,1 30.07,-10.95" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div>
+        <div class="hero-org-name">UIAA · Avalanche Transceiver Commission</div>
+        <div class="hero-org-sub">International Climbing &amp; Mountaineering Federation</div>
+      </div>
+    </div>
+
+    <p class="hero-eyebrow">Spring Working Group Meeting</p>
+    <h1>Meeting Day<br>Programme</h1>
+    <div class="hero-rule"></div>
+    <p class="hero-sub">One day. Two venues. Standards that save lives.</p>
+
+    <div class="chips-row">
+      <span class="chip">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="1" y="2" width="12" height="11" rx="2"/><path d="M1 6h12M5 0v4M9 0v4"/></svg>
+        Monday, April 27, 2026
+      </span>
+      <span class="chip">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7 1C4.8 1 3 2.8 3 5c0 3.2 4 8 4 8s4-4.8 4-8c0-2.2-1.8-4-4-4z"/><circle cx="7" cy="5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        ENSA, Chamonix
+      </span>
+      <span class="chip">
+        <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M7 1C4.8 1 3 2.8 3 5c0 3.2 4 8 4 8s4-4.8 4-8c0-2.2-1.8-4-4-4z"/><circle cx="7" cy="5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        Plan de l'Aiguille · 2 308 m
+      </span>
+      <span class="chip red">Today</span>
+    </div>
+
+    <svg class="hero-mountains" viewBox="0 0 860 160" preserveAspectRatio="xMidYMax slice" fill="white" aria-hidden="true">
+      <path d="M0,160 L0,130 C30,118 60,110 90,100 L120,112 L155,88 L180,100 L210,70 L238,84 L265,52 L290,68 L315,38 L338,55 L360,24 L382,44 L402,14 L424,34 L444,6 L465,28 L484,0 L504,22 L522,8 L542,28 L562,14 L582,36 L604,20 L626,44 L650,28 L676,56 L702,40 L730,68 L758,50 L790,82 L820,62 L860,95 L860,160 Z"/>
+    </svg>
+  </header>
+
+  <!-- ── FULL DAY SCHEDULE ───────────────────────────────────────────────── -->
+  <section class="section" id="schedule">
+    <p class="section-eyebrow">Full Day</p>
+    <h2 class="section-title">Today's Schedule</h2>
+    <div class="section-rule"></div>
+
+    <div style="display:flex;gap:1.2rem;flex-wrap:wrap;margin-bottom:1.2rem;">
+      <div style="display:flex;align-items:center;gap:0.45rem;font-size:0.75rem;color:var(--w40);">
+        <span style="width:10px;height:10px;border-radius:2px;background:var(--w10);flex-shrink:0;border:1px solid var(--w20);"></span>
+        Indoor · ENSA
+      </div>
+      <div style="display:flex;align-items:center;gap:0.45rem;font-size:0.75rem;color:#d4891a;">
+        <span style="width:10px;height:10px;border-radius:2px;background:var(--gold);flex-shrink:0;"></span>
+        Field · Plan de l'Aiguille
+      </div>
+      <div style="display:flex;align-items:center;gap:0.45rem;font-size:0.75rem;color:rgba(233,44,44,0.8);">
+        <span style="width:10px;height:10px;border-radius:2px;background:var(--red);flex-shrink:0;"></span>
+        Current session
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <div class="tl-item" data-start="07:00" data-end="08:30">
+        <span class="tl-time-abs">07:00</span>
+        <div class="tl-title">Breakfast</div>
+        <div class="tl-desc">ENSA mess hall</div>
+        <div class="tl-time-range">07:00 – 08:30</div>
+      </div>
+      <div class="tl-item" data-start="08:30" data-end="09:00">
+        <span class="tl-time-abs">08:30</span>
+        <div class="tl-title">Opening Session</div>
+        <div class="tl-desc">Welcome address and meeting objectives</div>
+        <div class="tl-time-range">08:30 – 09:00</div>
+      </div>
+      <div class="tl-item" data-start="09:00" data-end="10:00">
+        <span class="tl-time-abs">09:00</span>
+        <div class="tl-title">Standard Review</div>
+        <div class="tl-desc">Terms, definitions, nomenclature &amp; test methods</div>
+        <div class="tl-time-range">09:00 – 10:00</div>
+      </div>
+      <div class="tl-item" data-start="10:00" data-end="10:30">
+        <span class="tl-time-abs">10:00</span>
+        <div class="tl-title">Coffee Break</div>
+        <div class="tl-desc">Networking</div>
+        <div class="tl-time-range">10:00 – 10:30</div>
+      </div>
+      <div class="tl-item" data-start="10:30" data-end="11:30">
+        <span class="tl-time-abs">10:30</span>
+        <div class="tl-title">Indoor Tests Session</div>
+        <div class="tl-desc">Test methods &amp; cross-test review</div>
+        <div class="tl-time-range">10:30 – 11:30</div>
+      </div>
+      <div class="tl-item" data-start="11:30" data-end="12:30">
+        <span class="tl-time-abs">11:30</span>
+        <div class="tl-title">Lunch &amp; Transfer</div>
+        <div class="tl-desc">Sandwich lunch, then cable car to Plan de l'Aiguille</div>
+        <div class="tl-time-range">11:30 – 12:30</div>
+      </div>
+      <div class="tl-item field" data-start="12:30" data-end="16:30">
+        <span class="tl-time-abs">12:30</span>
+        <div class="tl-title">Field Tests + IVAQ Demo</div>
+        <div class="tl-desc">Plan de l'Aiguille · 2 308 m</div>
+        <div class="tl-time-range">12:30 – 16:30</div>
+      </div>
+      <div class="tl-item" data-start="16:30" data-end="17:00">
+        <span class="tl-time-abs">16:30</span>
+        <div class="tl-title">Return to ENSA</div>
+        <div class="tl-desc">Group transfer</div>
+        <div class="tl-time-range">16:30 – 17:00</div>
+      </div>
+      <div class="tl-item" data-start="17:00" data-end="18:00">
+        <span class="tl-time-abs">17:00</span>
+        <div class="tl-title">Final Debriefing</div>
+        <div class="tl-desc">Key conclusions &amp; next steps</div>
+        <div class="tl-time-range">17:00 – 18:00</div>
+      </div>
+      <div class="tl-item dinner" data-start="19:00" data-end="22:00">
+        <span class="tl-time-abs">19:00</span>
+        <div class="tl-title">Group Dinner</div>
+        <div class="tl-desc">MBC Chamonix Microbrewery · Chamonix town centre</div>
+        <div class="tl-time-range">19:00 – 22:00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MORNING ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="morning">
+    <p class="section-eyebrow">Morning · 07:00 – 12:30</p>
+    <h2 class="section-title">ENSA Chamonix</h2>
+    <div class="section-rule"></div>
+
+    <p style="font-size:0.88rem;color:var(--w60);line-height:1.65;max-width:58ch;margin-bottom:1.2rem;">All morning sessions take place at ENSA — École Nationale de Ski et d'Alpinisme. Breakfast is served from 07:00 in the mess hall.</p>
+
+    <div class="session-grid">
+      <div class="session-card" data-start="07:00" data-end="08:30">
+        <div class="sc-time">07:00 – 08:30</div>
+        <div class="sc-title">Breakfast</div>
+        <div class="sc-desc">ENSA mess hall</div>
+      </div>
+      <div class="session-card" data-start="08:30" data-end="09:00">
+        <div class="sc-time">08:30 – 09:00</div>
+        <div class="sc-title">Opening Session</div>
+        <div class="sc-desc">Welcome address and meeting objectives</div>
+      </div>
+      <div class="session-card" data-start="09:00" data-end="10:00">
+        <div class="sc-time">09:00 – 10:00</div>
+        <div class="sc-title">Standard Review</div>
+        <div class="sc-desc">Terms, definitions, nomenclature &amp; test methods</div>
+      </div>
+      <div class="session-card" data-start="10:00" data-end="10:30">
+        <div class="sc-time">10:00 – 10:30</div>
+        <div class="sc-title">Coffee Break</div>
+        <div class="sc-desc">Networking</div>
+      </div>
+      <div class="session-card" data-start="10:30" data-end="11:30">
+        <div class="sc-time">10:30 – 11:30</div>
+        <div class="sc-title">Indoor Tests Session</div>
+        <div class="sc-desc">Test methods · Cold drop, immersion, revert-to-send</div>
+      </div>
+      <div class="session-card" data-start="11:30" data-end="12:30">
+        <div class="sc-time">11:30 – 12:30</div>
+        <div class="sc-title">Lunch &amp; Transfer</div>
+        <div class="sc-desc">Sandwich lunch then cable car to Plan de l'Aiguille</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FIELD SESSION ───────────────────────────────────────────────────── -->
+  <section class="section" id="field">
+    <p class="section-eyebrow gold">Field Session · 12:30 – 16:30</p>
+    <h2 class="section-title">Field Tests &amp; Live Demos</h2>
+    <div class="section-rule" style="background:var(--gold);opacity:0.5;"></div>
+
+    <div class="altitude-badge">
+      <span class="alt-num">2 308 m</span>
+      <span class="alt-label">Plan de l'Aiguille</span>
+    </div>
+
+    <p style="font-size:0.88rem;color:var(--w60);line-height:1.65;max-width:60ch;margin-bottom:1.2rem;">Mid-station of the Aiguille du Midi cable car. Cold, wind, possible snow. Dress for alpine conditions. Bring your personal avalanche transceiver — the cable car departs from central Chamonix after lunch.</p>
+
+    <div class="session-grid">
+      <div class="session-card field" data-start="12:30" data-end="16:30">
+        <div class="sc-time">12:30 – 16:30</div>
+        <div class="sc-title">Field Tests of Transceivers</div>
+        <div class="sc-desc">Signal range · Strip width · Fine search accuracy · Marking function · Revert to send</div>
+      </div>
+      <div class="session-card field" data-start="12:30" data-end="16:30">
+        <div class="sc-time">12:30 – 16:30</div>
+        <div class="sc-title">IVAQ Live Demonstration</div>
+        <div class="sc-desc">Parallel session · Group check &amp; marking function demo</div>
+      </div>
+    </div>
+
+    <div style="margin-top:0.75rem;">
+      <p class="section-eyebrow gold" style="margin-bottom:0.7rem;">Bring with you</p>
+      <div class="gear-grid">
+        <div class="gear-item">Warm mid-layer</div>
+        <div class="gear-item">Waterproof boots</div>
+        <div class="gear-item">Waterproof shell jacket</div>
+        <div class="gear-item">Hat &amp; gloves</div>
+        <div class="gear-item">Sunscreen &amp; sunglasses</div>
+        <div class="gear-item">Small daypack</div>
+      </div>
+    </div>
+
+    <div class="notice">
+      <div class="notice-label">Important</div>
+      <p>Return transfer is organised at 16:30 from Plan de l'Aiguille back to ENSA. The cable car departs from central Chamonix — transfer is organised after lunch.</p>
+    </div>
+  </section>
+
+  <!-- ── EVENING ─────────────────────────────────────────────────────────── -->
+  <section class="section" id="evening">
+    <p class="section-eyebrow">Evening · 16:30 – 22:00</p>
+    <h2 class="section-title">Evening Programme</h2>
+    <div class="section-rule"></div>
+
+    <p style="font-size:0.88rem;color:var(--w60);line-height:1.65;max-width:58ch;margin-bottom:1.2rem;">Back to ENSA for the final working session, then dinner together in Chamonix town centre.</p>
+
+    <div class="session-grid">
+      <div class="session-card" data-start="16:30" data-end="17:00">
+        <div class="sc-time">16:30 – 17:00</div>
+        <div class="sc-title">Return to ENSA</div>
+        <div class="sc-desc">Group transfer from Plan de l'Aiguille</div>
+      </div>
+      <div class="session-card" data-start="17:00" data-end="18:00">
+        <div class="sc-time">17:00 – 18:00</div>
+        <div class="sc-title">Final Debriefing</div>
+        <div class="sc-desc">Key conclusions, decisions, and next actions</div>
+      </div>
+    </div>
+
+    <div class="dinner-card">
+      <div class="dc-label">Dinner Venue</div>
+      <div class="dc-name">MBC Chamonix Microbrewery</div>
+      <div class="dc-sub">19:00 – 22:00 · Chamonix town centre</div>
+    </div>
+  </section>
+
+  <!-- ── VENUE INFO ──────────────────────────────────────────────────────── -->
+  <section class="section" id="venues">
+    <p class="section-eyebrow">Venues</p>
+    <h2 class="section-title">Where to Go</h2>
+    <div class="section-rule"></div>
+
+    <div class="info-grid">
+      <div class="info-block">
+        <div class="ib-label">Morning Venue</div>
+        <div class="ib-value">ENSA Chamonix</div>
+        <div class="ib-sub">École Nationale de Ski et d'Alpinisme<br>35 Route du Bouchet, 74400 Chamonix</div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Field Venue</div>
+        <div class="ib-value">Plan de l'Aiguille</div>
+        <div class="ib-sub">Mid-station, Aiguille du Midi cable car<br>2 308 m · Central Chamonix departure</div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Dinner Venue</div>
+        <div class="ib-value">MBC Chamonix</div>
+        <div class="ib-sub">Microbrewery &amp; restaurant<br>350 Rte du Bouchet, Chamonix</div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Commission</div>
+        <div class="ib-value">UIAA AvaWG</div>
+        <div class="ib-sub">Avalanche Transceiver Working Group<br>UIAA — Mountain Safety Commission</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLOSING ─────────────────────────────────────────────────────────── -->
+  <div class="closing">
+    <div class="closing-topo"></div>
+    <div class="closing-topo-2"></div>
+
+    <svg width="60" height="60" viewBox="0 0 100 100" fill="none" aria-label="UIAA AvaWG logo" style="margin-bottom:1.2rem;position:relative;">
+      <circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.4)" stroke-width="5.5"/>
+      <polyline points="7,89 27,51 40,64 57,37 93,89"
+        stroke="rgba(255,255,255,0.4)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(44,53) rotate(-25)">
+        <circle cx="0" cy="0" r="3.5" fill="#e92c2c"/>
+        <path d="M -7.52,-2.74 A 8,8 0 0,1 7.52,-2.74" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M -15.04,-5.47 A 16,16 0 0,1 15.04,-5.47" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M -22.55,-8.21 A 24,24 0 0,1 22.55,-8.21" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M -30.07,-10.95 A 32,32 0 0,1 30.07,-10.95" stroke="#e92c2c" stroke-width="4.5" stroke-linecap="round"/>
+      </g>
+    </svg>
+
+    <h2>Welcome to<br>Chamonix.</h2>
+    <div class="closing-rule"></div>
+    <p>Let's make today count.</p>
+    <p class="tagline">Standards that save lives · UIAA 2026</p>
+  </div>
+
+</div><!-- /page -->
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer-left">
+    <svg width="18" height="18" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+      <circle cx="50" cy="50" r="43" stroke="rgba(255,255,255,0.25)" stroke-width="5.5"/>
+      <polyline points="7,89 27,51 40,64 57,37 93,89" stroke="rgba(255,255,255,0.25)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(44,53) rotate(-25)">
+        <circle cx="0" cy="0" r="3.5" fill="#e92c2c"/>
+        <path d="M -15.04,-5.47 A 16,16 0 0,1 15.04,-5.47" stroke="#e92c2c" stroke-width="3.5" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <span class="footer-org">UIAA Avalanche Transceiver Commission</span>
+  </div>
+  <span class="footer-copy">Spring Meeting · Chamonix · April 27, 2026</span>
+</footer>
+
+<script>
+  const SCHEDULE = [
+    { start: "07:00", end: "08:30", title: "Breakfast" },
+    { start: "08:30", end: "09:00", title: "Opening Session" },
+    { start: "09:00", end: "10:00", title: "Standard Review" },
+    { start: "10:00", end: "10:30", title: "Coffee Break" },
+    { start: "10:30", end: "11:30", title: "Indoor Tests Session" },
+    { start: "11:30", end: "12:30", title: "Lunch & Transfer" },
+    { start: "12:30", end: "16:30", title: "Field Session" },
+    { start: "16:30", end: "17:00", title: "Return to ENSA" },
+    { start: "17:00", end: "18:00", title: "Final Debriefing" },
+    { start: "19:00", end: "22:00", title: "Group Dinner" },
+  ];
+
+  function toMins(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+  }
+
+  function tick() {
+    const now = new Date();
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    const sess = SCHEDULE.find(s => nowMins >= toMins(s.start) && nowMins < toMins(s.end));
+
+    const hh = String(now.getHours()).padStart(2,"0");
+    const mm = String(now.getMinutes()).padStart(2,"0");
+
+    document.getElementById("now-label").textContent = sess
+      ? `${hh}:${mm} · ${sess.title}`
+      : `${hh}:${mm}`;
+
+    document.querySelectorAll("[data-start][data-end]").forEach(el => {
+      const s = toMins(el.dataset.start);
+      const e = toMins(el.dataset.end);
+      el.classList.remove("is-now", "is-past");
+      if (nowMins >= s && nowMins < e) el.classList.add("is-now");
+      else if (nowMins >= e)           el.classList.add("is-past");
+    });
+  }
+
+  tick();
+  setInterval(tick, 10000);
+</script>
+</body>
+</html>
